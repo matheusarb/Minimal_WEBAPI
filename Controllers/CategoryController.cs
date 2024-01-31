@@ -13,12 +13,19 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> GetAsync(
         [FromServices]BlogDataContext context)
     {
-        var categories = await context
-            .Categories
-            .AsNoTracking()
-            .ToListAsync();
+        try
+        {
+            var categories = await context
+                .Categories
+                .AsNoTracking()
+                .ToListAsync();
 
-        return Ok(categories);
+            return Ok(new ResultViewModel<List<Category>>(categories));
+        }
+        catch
+        {
+            return StatusCode(500, new ResultViewModel<List<Category>>("05X04 - Falha interna no servidor."));
+        }
     }
 
     [HttpGet("v1/categories/{id:int}")]
@@ -54,6 +61,9 @@ public class CategoryController : ControllerBase
         [FromServices] BlogDataContext context,
         [FromBody] EditorCategoryViewModel model)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         try
         {
             var category = new Category
