@@ -50,11 +50,12 @@ public class CategoryController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            return StatusCode(500, "Não foi possível incluir a categoria");
+            //colocar uma numeração de código para achar onde o exception ocorreu com mais facilidade
+            return StatusCode(500, "05XE9 - Não foi possível incluir a categoria");
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return StatusCode(500, "Falha interna no servidor");
+            return StatusCode(500, "05XE10 - Falha interna no servidor");
         }
     }
 
