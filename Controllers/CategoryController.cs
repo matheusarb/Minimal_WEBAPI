@@ -1,4 +1,5 @@
 ﻿using Blog.Data;
+using Blog.Extensions;
 using Blog.Models;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -36,19 +37,18 @@ public class CategoryController : ControllerBase
         try
         {
             var category = await context
-            .Categories
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
+                .Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            return Ok(category);
+            if (category == null)
+                return NotFound(new ResultViewModel<Category>("Conteúdo não encontrado."));
+
+            return Ok(new ResultViewModel<Category>(category));
         }
         catch (DbUpdateException ex)
         {
             return StatusCode(500, "05XE9 - Não foi possível buscar a categoria");
-        }
-        catch (FileNotFoundException ex)
-        {
-            return StatusCode(404, "05XE13 - Não foi possível buscar a categoria");
         }
         catch (Exception ex)
         {
@@ -62,7 +62,7 @@ public class CategoryController : ControllerBase
         [FromBody] EditorCategoryViewModel model)
     {
         if(!ModelState.IsValid)
-            return BadRequest(ModelState);
+            return BadRequest(new ResultViewModel<Category>(ModelState.GetErros()));
 
         try
         {

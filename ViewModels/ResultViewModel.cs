@@ -20,7 +20,7 @@ public class ResultViewModel<T>
 
     public ResultViewModel(string error)
     {
-         
+        Errors.Add(error);
     }
 
     public T Data { get; private set; }
