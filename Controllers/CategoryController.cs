@@ -10,13 +10,18 @@ namespace Blog.Controllers;
 [ApiController]
 public class CategoryController : ControllerBase
 {
+    private readonly BlogDataContext _context;
+    public CategoryController(BlogDataContext context)
+    {
+        _context = context;
+    }
+
     [HttpGet("v1/categories")]
-    public async Task<IActionResult> GetAsync(
-        [FromServices]BlogDataContext context)
+    public async Task<IActionResult> GetAsync()
     {
         try
         {
-            var categories = await context
+            var categories = await _context
                 .Categories
                 .AsNoTracking()
                 .ToListAsync();
