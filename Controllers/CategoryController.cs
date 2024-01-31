@@ -52,7 +52,7 @@ public class CategoryController : ControllerBase
     [HttpPost("v1/categories")]
     public async Task<IActionResult> PostAsync(
         [FromServices] BlogDataContext context,
-        [FromBody] CreateCategoryViewModel model)
+        [FromBody] EditorCategoryViewModel model)
     {
         try
         {
@@ -82,7 +82,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> PutAsync(
         [FromServices] BlogDataContext context,
         [FromRoute] int id,
-        CreateCategoryViewModel model)
+        EditorCategoryViewModel model)
     {
         try
         {
