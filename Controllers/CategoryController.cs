@@ -67,7 +67,7 @@ public class CategoryController : ControllerBase
         [FromBody] EditorCategoryViewModel model)
     {
         if(!ModelState.IsValid)
-            return BadRequest(new ResultViewModel<Category>(ModelState.GetErros()));
+            return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
 
         try
         {
@@ -105,7 +105,7 @@ public class CategoryController : ControllerBase
                 .Categories
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (category == null)
-                return NotFound(new ResultViewModel<Category>(ModelState.GetErros()));
+                return NotFound(new ResultViewModel<Category>(ModelState.GetErrors()));
 
             category.Name = model.Name ?? category.Name;
             category.Slug = model.Slug == "" ? category.Name.ToLower() : model.Slug;
