@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Blog.Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,10 +10,7 @@ namespace Blog.Controllers;
 public class HomeController : ControllerBase
 {
     //Heatl checker - verifica se a API está online
-    [HttpGet]
-    [Route("")]
+    [HttpGet("")]
     public IActionResult Get()
         => Ok(new { message = "API rodando" });
-    
-
 }
