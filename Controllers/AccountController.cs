@@ -87,4 +87,6 @@ public class AccountController : ControllerBase
             return StatusCode(500, new ResultViewModel<string>("05X23 - Falha interna no servidor"));
         }     
     }
+
+
 }
