@@ -123,11 +123,11 @@ public class AccountController : ControllerBase
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+            return Ok(new ResultViewModel<string>("image sucessfully changed!", null));
         }
         catch (Exception ex)
         {
-
-            throw;
+            return StatusCode(500, new ResultViewModel<string>("05X31 - Falha interna no servidor"));
         }
     }
 }
