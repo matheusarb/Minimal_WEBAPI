@@ -11,7 +11,6 @@ public static class Configuration
 
     //Smtp
     public static SmtpConfiguration Smtp = new();
-
     //Envio de email
     public class SmtpConfiguration
     {
