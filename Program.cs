@@ -53,10 +53,8 @@ void ConfigureAuthentication(WebApplicationBuilder builder)
 
 void ConfigureMvc(WebApplicationBuilder builder)
 {
-    builder
-    .Services
-    .AddControllers()
-    .ConfigureApiBehaviorOptions(options =>
+    builder.Services.AddMemoryCache();
+    builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
     })
