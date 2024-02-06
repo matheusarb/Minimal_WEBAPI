@@ -5,6 +5,7 @@ using Blog.ViewModels;
 using Blog.ViewModels.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Blog.Controllers;
 
@@ -17,15 +18,22 @@ public class CategoryController : ControllerBase
         _context = context;
     }
 
+    private List<Category> GetCategories()
+    {
+        return _context.Categories.AsNoTracking().ToList();
+    }
+
     [HttpGet("v1/categories")]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync(
+        [FromServices] IMemoryCache cache)
     {
         try
         {
-            var categories = await _context
-                .Categories
-                .AsNoTracking()
-                .ToListAsync();
+            var categories = cache.GetOrCreate("CategoriesCache", entry =>
+            {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
+                return GetCategories();
+            });
 
             return Ok(new ResultViewModel<List<Category>>(categories));
         }
