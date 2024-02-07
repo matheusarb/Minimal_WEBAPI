@@ -22,6 +22,10 @@ app.UseResponseCompression();
 app.UseStaticFiles();
 app.MapControllers();
 
+if (app.Environment.IsDevelopment())
+{
+}
+
 app.Run();
 
 void LoadConfiguration(WebApplication app)
