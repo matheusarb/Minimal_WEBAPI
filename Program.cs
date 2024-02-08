@@ -28,6 +28,8 @@ app.UseResponseCompression();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.Run();
@@ -91,4 +93,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddDbContext<BlogDataContext>(options => options.UseSqlServer(connectionString));
     builder.Services.AddScoped<TokenService>();
     builder.Services.AddTransient<EmailService>();
+
+    //SWAGGER
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 }
